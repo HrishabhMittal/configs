@@ -1,0 +1,27 @@
+#!/bin/bash
+
+config_dir="$HOME/.config"
+theme_dir="$HOME/.themes"
+
+wipe_theme() {
+    rm "$config_dir/gtk-4.0/gtk.css"
+    rm "$config_dir/gtk-4.0/gtk-dark.css"
+    rm "$config_dir/gtk-4.0/assets"
+    rm "$config_dir/assets"
+}
+
+if [[ $1 == '--reset' ]]; then
+    wipe_theme
+else
+    chosen=$(yad --title="change theme" --list --column=themes $(ls "$theme_dir") --height=300 --width=300 --separator="" --single --no-buttons --center)
+    if [[ $chosen == '' ]]; then
+        yad --text="invalid option"
+    else
+        wipe_theme
+        cp "$theme_dir/$chosen/gtk-4.0/gtk.css" "$config_dir/gtk-4.0/gtk.css"
+        cp "$theme_dir/$chosen/gtk-4.0/gtk-dark.css" "$config_dir/gtk-4.0/gtk-dark.css"
+        cp "$theme_dir/$chosen/gtk-4.0/assets" "$config_dir/gtk-4.0/assets"
+        cp "$theme_dir/$chosen/assets" "$config_dir/assets"
+        yad --text="theme changed!"
+    fi
+fi

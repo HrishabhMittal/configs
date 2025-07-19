@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+if [[ "$1" == "make" ]]; then
+    echo enter new python env name:
+    read -r dirname
+    dirname="$HOME/pyenv/$dirname"
+    echo crating $dirname
+    mkdir -p "$dirname"
+    python -m venv "$dirname"
+else
+    arr=()
+    echo select an environment
+    num=1
+    for i in "$HOME/pyenv/"*; do
+        echo "$num) $(basename $i)"
+        ((num++))
+        arr+=($(basename $i))
+    done
+    echo
+    read -r selected
+    
+    if [[ $selected -gt 0 && $selected -le ${#arr[@]} ]]; then
+        ((selected--))
+        echo "choosing $HOME/pyenv/${arr[selected]}/bin/activate"
+        source "$HOME/pyenv/${arr[selected]}/bin/activate"
+    fi
+fi

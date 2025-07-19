@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+import os
+user="/home/"+os.getlogin()+"/config/"
+l=[]
+ind=1
+def rmr(path):
+    if os.path.islink(path):
+        os.remove(path)
+        return
+    os.rename(path,path+".backup")
+for i in os.listdir(user):
+    if os.path.isdir(user+i):
+        print(ind,") ",i,sep="")
+        ind+=1
+        l.append(i)
+inp=int(input("select config:"))
+if inp>0 and inp<=len(l):
+    print("selected:",l[inp-1])
+    user+=l[inp-1]+"/"
+    configdir="/home/"+os.getlogin()+"/.config/"
+    for i in os.listdir(user):
+        if os.path.exists(configdir+i):
+            rmr(configdir+i)
+        os.symlink(user+i,configdir+i)

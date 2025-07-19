@@ -1,0 +1,83 @@
+#!/bin/bash
+
+CONFIG_DIR="$HOME/.config/fileopener"
+CONFIG_FILE="$CONFIG_DIR/config"
+
+# Create config directory and file if they don't exist
+mkdir -p "$CONFIG_DIR"
+touch "$CONFIG_FILE"
+
+# Function to find an application for a given extension
+find_app() {
+    local ext="$1"
+    while IFS=: read -r app exts; do
+        for e in $exts; do
+            if [[ "$e" == "$ext" ]]; then
+                echo "$app"
+                return
+            fi
+        done
+    done < "$CONFIG_FILE"
+    echo ""
+}
+
+# Function to add a new application to the config file
+add_app() {
+    local app="$1"
+    local ext="$2"
+    # Check if the app already exists in the config
+    if grep -q "^$app:" "$CONFIG_FILE"; then
+        # Append the extension to the existing entry
+        sed -i "/^$app:/ s/$/ $ext/" "$CONFIG_FILE"
+    else
+        # Add a new entry
+        echo "$app: $ext" >> "$CONFIG_FILE"
+    fi
+}
+
+# Check if a file path is provided
+if [[ -z "$1" ]]; then
+    echo "Usage: $0 <file or folder>"
+    exit 1
+fi
+
+file="$1"
+
+# Check if the given parameter is a directory
+if [[ -d "$file" ]]; then
+    cd "$file" || exit
+    echo "Changed directory to $(pwd)"
+    exit 0
+fi
+
+# Extract the file extension, if any
+if [[ "$file" == *.* ]] && [[ "$file" != "."* ]]; then
+    ext="${file##*.}"
+else
+    ext="none"  # No extension case or hidden file without an extension
+fi
+
+# Find the application from the config file
+app=$(find_app "$ext")
+
+# If no application is found, prompt the user
+if [[ -z "$app" ]]; then
+    read -rp "No application found for ${ext:+.$ext }files. Enter the executable name: " app
+    # Save the new application and extension
+    add_app "$app" "$ext"
+fi
+
+# Check if the application exists
+if ! command -v "$app" &>/dev/null; then
+    echo "Error: Application '$app' not found on the system."
+    exit 1
+fi
+
+# Detect if the application is terminal-based or GUI
+if [[ -n "$DISPLAY" ]] && [[ "$app" != "nvim" && "$app" != "vim" && "$app" != "nano" && "$app" != "emacs" ]]; then
+    # Assume GUI application
+    "$app" "$file" &
+else
+    # Assume terminal application
+    "$app" "$file"
+fi

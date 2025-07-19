@@ -1,0 +1,54 @@
+#!/bin/bash
+login=0
+displayer=less
+COOKIE_FILE="$HOME/bin/cookies.txt"
+display_view() {
+    curl -s --cookie $COOKIE_FILE "https://adventofcode.com/$1/day/$2" | sed -n '/<main/,/<\/main>/p' |
+    sed 's/<\/*p[!>]*>/\n/g' |
+    sed 's/<[^>]*>//g' |
+    sed 's/\n\n/\n/g' | $displayer
+}
+display_submit_ans() {
+    curl -s -X POST --cookie $COOKIE_FILE -d "level=$3&answer=$4" "https://adventofcode.com/$1/day/$2/answer" |
+    sed -n '/<main/,/<\/main>/p' |
+    sed 's/<\/*p>/\n/g' |
+    sed 's/<[^>]*>//g' |
+    sed 's/\n\n/\n/g' | $displayer
+}
+get_data() {
+    curl -s --cookie $COOKIE_FILE "https://adventofcode.com/$1/day/$2/input" > $3
+}
+main() {
+    echo -n year:
+    read -r year
+    echo -n day:
+    read -r day
+    if [[ "$login" == "1" ]]; then
+        echo "(v)iew, (s)ubmit or (g)et input? (v/s/g default v):"
+        read -r vs
+    else
+        vs="v"
+    fi
+    if [[ "$vs" == "s" ]]; then
+        echo -n lvl 1 or 2:
+        read -r lvl
+        echo -n answer?
+        read -r ans
+        display_submit_ans "$year" "$day" "$lvl" "$ans"
+    elif [[ "$vs" == "g" ]]; then
+        echo -n input filename?
+        read -r file
+        get_data "$year" "$day" "$file"
+    else
+        display_view "$year" "$day"
+    fi
+}
+
+if [ -f "$COOKIE_FILE" ]; then
+    login=1
+    main
+else
+    echo "$COOKIE_FILE missing, download cookies.txt entension to get the cookies.txt file to submit answers"
+    echo "you can still view questions"
+    main
+fi

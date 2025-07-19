@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+FILE="/tmp/betterydalrrunning"
+if [[ -f "$FILE" ]]; then
+    exit
+fi
+touch "$FILE"
+
+trap 'rm -f "$FILE"' EXIT
+while true; do
+    $HOME/.config/awesome/battery.sh
+    sleep 10
+done

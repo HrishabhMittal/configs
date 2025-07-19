@@ -1,0 +1,108 @@
+#!/bin/bash
+
+if [ "$#" -eq 0 ]; then
+    echo "Usage: $0 <markdown_file>"
+    exit 1
+fi
+
+INPUT_FILE="$1"
+if [ ! -f "$INPUT_FILE" ]; then
+    echo "Error: File '$INPUT_FILE' not found!"
+    exit 1
+fi
+
+TMP_FILE=$(mktemp /tmp/markdown_viewer.XXXXXX.html)
+
+trap "rm -f '$TMP_FILE'" EXIT
+
+echo "
+<!DOCTYPE html>
+<html lang=\"en\">
+<head>
+    <meta charset=\"UTF-8\">
+    <title>Markdown Viewer</title>
+    <style>
+        /* General body styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #192024;
+            color: #d4d4d4;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        /* Headings */
+        h1, h2, h3, h4, h5, h6 {
+            border-bottom: 1px solid #444;
+            padding-bottom: 5px;
+        }
+        /* Paragraphs and Lists */
+        p {
+            margin-bottom: 10px;
+        }
+        ul, ol {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        /* Code Blocks */
+        pre {
+            background: #1e1e1e;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            background: #3e4451;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #e06c75;
+        }
+        /* Blockquotes */
+        blockquote {
+            border-left: 4px solid #e5c07b;
+            padding-left: 10px;
+            font-style: italic;
+            color: #d19a66;
+        }
+        /* Links */
+        a {
+            color: #61afef;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        th, td {
+            border: 1px solid #555;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background: #3e4451;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+<body>
+" >> "$TMP_FILE"
+
+md2html "$INPUT_FILE" >> "$TMP_FILE"
+
+echo "
+</body>
+</html>
+" >> "$TMP_FILE"
+
+firefox --new-window "$TMP_FILE" --kiosk
+
+sleep 1

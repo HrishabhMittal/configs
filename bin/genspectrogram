@@ -1,0 +1,11 @@
+#!/bin/bash
+inaudio="$1"
+if [[ "$inaudio" == "" ]]; then
+    echo please provide an audiofile
+    return 1
+fi
+outfile="$2"
+if [[ "$outfile" == "" ]]; then
+    outfile="spectogram.png"
+fi
+ffmpeg -i "$1" -lavfi showspectrumpic=s=1024x512:legend=1 "$outfile"

@@ -1,0 +1,39 @@
+#!/bin/bash
+
+if [[ "$1" == "" ]]; then
+    echo "Enter name of the device to connect to"
+    exit 1
+fi
+
+connect="$1"
+found=""
+
+run_scan() {
+    while true; do
+        bluetoothctl --timeout 10 scan on &> /dev/null
+    done
+}
+run_scan &
+SCAN_PID=$!
+
+while true; do
+    device_entry="$(bluetoothctl devices | grep "$connect")"
+    if [[ -n "$device_entry" ]]; then
+        mac=$(echo "$device_entry" | awk '{print $2}')
+        echo "[INFO] Found device: $mac"
+        echo "[INFO] Pairing..."
+        bluetoothctl pair "$mac" &> /dev/null
+        echo "[INFO] Trusting..."
+        bluetoothctl trust "$mac" &> /dev/null
+        echo "[INFO] Connecting..."
+        connection_output="$(bluetoothctl connect "$mac")"
+        if echo "$connection_output" | grep -qi "successful"; then
+            echo "[SUCCESS] Connected to $mac"
+            kill $SCAN_PID
+            break
+        else
+            echo "[WARN] Failed to connect. Retrying..."
+        fi
+    fi
+    sleep 1
+done

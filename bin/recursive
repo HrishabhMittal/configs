@@ -1,0 +1,15 @@
+#!/bin/bash
+
+for i in *; do
+    if [[ "$i" == "*" ]]; then
+        break
+    fi
+    if [[ -f "$i" ]]; then
+        $@ "$i"
+    else
+        cd "$i"
+        recursive $@
+        cd ..
+    fi
+done
+

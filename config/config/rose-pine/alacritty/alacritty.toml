@@ -1,0 +1,145 @@
+[terminal.shell]
+program               = "/usr/bin/env"
+args                  = [ "bash", ]
+[env]
+TERM                  = "xterm-256color"
+
+[window]
+padding               = { x = 2, y = 2 }
+decorations           = "None"
+opacity               = 1.0
+blur                  = true
+[scrolling]
+history               = 65535
+
+[font]
+normal                = { family = "Fira Code", style = "Regular" }
+bold                  = { family = "Fira Code", style = "Bold" }
+italic                = { family = "Fira Code", style = "Italic" }
+bold_italic           = { family = "Fira Code", style = "Bold Italic" }
+size                  = 11
+offset                = { x = 0, y = 0 }
+glyph_offset          = { x = 0, y = 0 }
+
+
+[colors.primary]
+background            = "#191724"  
+foreground            = "#e0def4"  
+dim_foreground        = "#908caa"  
+bright_foreground     = "#f6c177"  
+
+[colors.cursor]
+text                  = "#191724"  
+cursor                = "#f6c177"  
+
+[colors.vi_mode_cursor]
+text                  = "#191724"  
+cursor                = "#eb6f92"  
+
+[colors.search.matches]
+foreground            = "#191724"  
+background            = "#f6c177"  
+
+[colors.search.focused_match]
+foreground            = "#191724"  
+background            = "#eb6f92"  
+
+[colors.hints.start]
+foreground            = "#191724"  
+background            = "#f6c177"  
+
+[colors.hints.end]
+foreground            = "#191724"  
+background            = "#eb6f92"  
+
+[colors.line_indicator]
+foreground            = "None"
+background            = "None"
+
+[colors.footer_bar]
+foreground            = "#e0def4"  
+background            = "#26233a"  
+
+[colors.selection]
+text                  = "#191724"  
+background            = "#f6c177"  
+
+[colors.normal]
+black                 = "#191724"  
+red                   = "#eb6f92"  
+green                 = "#31748f"  
+yellow                = "#f6c177"  
+blue                  = "#9ccfd8"  
+magenta               = "#c4a7e7"  
+cyan                  = "#ebbcba"  
+white                 = "#e0def4"  
+
+[colors.bright]
+black                 = "#6e6a86"  
+red                   = "#eb6f92"  
+green                 = "#31748f"  
+yellow                = "#f6c177"  
+blue                  = "#9ccfd8"  
+magenta               = "#c4a7e7"  
+cyan                  = "#ebbcba"  
+white                 = "#f0f0f3"  
+
+[colors.dim]
+black                 = "#393552"  
+red                   = "#b4637a"  
+green                 = "#286983"  
+yellow                = "#ea9d34"  
+blue                  = "#56949f"  
+magenta               = "#907aa9"  
+cyan                  = "#d7827e"  
+white                 = "#908caa"  
+
+[colors]
+indexed_colors = [
+  { index = 16, color = "#f6c177" },  
+  { index = 17, color = "#eb6f92" }   
+]
+draw_bold_text_with_bright_colors = true
+
+[selection]
+save_to_clipboard     = true
+
+[cursor.style]
+shape                 = "Block"
+blinking              = "Always"
+
+[cursor.vi_mode_style]
+shape                 = "Block"
+blinking              = "Off"
+
+[cursor]
+blink_interval        = 500
+blink_timeout         = 0
+
+[mouse]
+hide_when_typing      = true
+bindings = [
+  { mouse = "Middle", action = "PasteSelection" },
+]
+
+[keyboard]
+bindings = [
+  { key = "V",        mods = "Control|Shift", action = "Paste" },
+  { key = "C",        mods = "Control|Shift", action = "Copy" },
+  { key = "Paste",                            action = "Paste" },
+  { key = "Copy",                             action = "Copy" },
+  { key = "Insert",   mods = "Shift",         action = "PasteSelection" },
+  { key = "F",        mods = "Control|Shift", action = "SearchForward",     mode = "~Search" },
+  { key = "B",        mods = "Control|Shift", action = "SearchBackward",    mode = "~Search" },
+  { key = "Key0",     mods = "Control",       action = "ResetFontSize" },
+  { key = "Equals",   mods = "Control",       action = "IncreaseFontSize" },
+  { key = "Minus",    mods = "Control",       action = "DecreaseFontSize" },
+  { key = "L",        mods = "Control",       action = "ClearLogNotice" },
+  { key = "L",        mods = "Control",       chars  = "\f" },
+  { key = "PageUp",   mods = "Shift",         action = "ScrollPageUp",      mode = "~Alt" },
+  { key = "PageDown", mods = "Shift",         action = "ScrollPageDown",    mode = "~Alt" },
+  { key = "Up",       mods = "Shift",         action = "ScrollLineUp",      mode = "~Alt" },
+  { key = "Down",     mods = "Shift",         action = "ScrollLineDown",    mode = "~Alt" },
+  { key = "Home",     mods = "Shift",         action = "ScrollToTop",       mode = "~Alt" },
+  { key = "End",      mods = "Shift",         action = "ScrollToBottom",    mode = "~Alt" },
+]

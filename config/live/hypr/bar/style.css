@@ -1,0 +1,163 @@
+
+:vars {
+    --background: #4E584E;           /* Ebony - dark background */
+    --foreground: #F0CEBC;           /* Pale Dogwood - light text */
+    --color0: #4E584E;               /* Ebony - base dark */
+    --color1: #989277;               /* Khaki - muted green-brown */
+    --color2: #645949;               /* Walnut brown - darker accent */
+    --color3: #736F5A;               /* Ebony 2 - medium tone */
+    --color4: #F0CEBC;               /* Pale Dogwood - bright accent */
+    --color5: #989277;               /* Khaki - aqua replacement */
+    --color6: #DC143C;               /* Cherry Red - bright accent */
+    --color7: #736F5A;               /* Ebony 2 - medium gray */
+    --color8: #645949;               /* Walnut brown - dark accent */
+    --color9: #F0CEBC;               /* Pale Dogwood - bright green replacement */
+    --color10: #DC143C;              /* Cherry Red - bright orange replacement */
+    --color11: #989277;              /* Khaki - bright blue replacement */
+    --color12: #DC143C;              /* Cherry Red - red */
+    --color13: #736F5A;              /* Ebony 2 - purple replacement */
+    --color14: #645949;              /* Walnut brown - yellow/olive replacement */
+    --color15: #F0CEBC;              /* Pale Dogwood - light text */
+
+    --window-bg: alpha(var(--background), 0.6);
+    --module-bg: alpha(var(--background), 0.0);
+    --border-color: var(--color6);           /* Cherry Red */
+    --ws-active: var(--color9);              /* Pale Dogwood */
+    --ws-inactive: var(--color13);           /* Ebony 2 */
+    --ws-empty: var(--color8);               /* Walnut Brown */
+    --ws-hover: var(--color11);              /* Khaki */
+    --ws-urgent: var(--color4);              /* Pale Dogwood */
+}
+* {
+    border-radius: 100px;
+    border-radius: 0px;
+    all: unset;
+    color: var(--foreground);
+    font-size: 16px;
+    font-family: "Fira Code";
+}
+
+button {
+    background-size: 400% 400%;
+}
+
+#bar-inner {
+    border-radius: 0px;
+    padding: 4px;
+    border: solid 2px;
+    border-color: var(--border-color);
+    background-color: var(--window-bg);
+    min-height: 20px;
+}
+
+#workspaces {
+    padding: 6px;
+    min-width: 0px;
+    background-color: var(--module-bg);
+}
+
+#workspaces>button {
+    padding: 0px 8px;
+    transition: padding 0.05s steps(8);
+    background-color: var(--ws-inactive);
+}
+
+#workspaces>button>label {
+    font-size: 0px;
+}
+
+#workspaces>button:hover {
+    background-color: var(--ws-hover);
+}
+
+#workspaces>button.urgent {
+    background-color: var(--ws-urgent);
+}
+
+#workspaces>button.active {
+    padding: 0px 32px;
+    background-color: var(--ws-active);
+}
+
+#workspaces>button.empty {
+    background-color: var(--ws-empty);
+}
+
+#date-time,
+#hyprland-language,
+#hyprland-window {
+    background-color: var(--module-bg);
+    padding: 0px 8px;
+}
+
+menu>menuitem>label,
+#date-time>label,
+#hyprland-language>label,
+#hyprland-window>label {
+    font-weight: 900;
+}
+
+#system-tray {
+    padding: 2px 4px;
+    background-color: var(--module-bg);
+}
+
+menu {
+    border: solid 2px;
+    border-radius: 10px;
+    border-color: var(--border-color);
+    background-color: var(--window-bg);
+}
+
+menu>menuitem {
+    border-radius: 0px;
+    background-color: var(--module-bg);
+    padding: 6px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+menu>menuitem:first-child {
+    margin-top: 1px;
+    border-radius: 8px 8px 0px 0px;
+}
+
+menu>menuitem:last-child {
+    margin-bottom: 1px;
+    border-radius: 0px 0px 8px 8px;
+}
+
+menu>menuitem:hover {
+    background-color: var(--border-color);
+}
+
+#cpu-progress-bar,
+#ram-progress-bar,
+#volume-progress-bar {
+    color: transparent;
+    background-color: transparent
+}
+
+#cpu-progress-bar {
+    border: solid 0px alpha(var(--color9), 0.8);
+}
+
+#ram-progress-bar,
+#volume-progress-bar {
+    border: solid 0px var(--border-color);
+}
+
+#widgets-container {
+    background-color: var(--module-bg);
+    padding: 2px;
+}
+
+tooltip {
+    border: solid 2px;
+    border-color: var(--border-color);
+    background-color: var(--window-bg);
+}
+
+tooltip>* {
+    padding: 2px 4px
+}

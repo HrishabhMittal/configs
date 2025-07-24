@@ -1,0 +1,197 @@
+# alacritty.toml
+# commented lines are the defaults
+# man 5 alacritty (>0.13) for full config manual
+
+#import = [
+#"~/.config/alacritty/catpuccin-mocha.toml",
+#"~/.config/alacritty/keybindings.toml",
+#]
+
+[terminal.shell]
+program               = "/usr/bin/env"
+args                  = [ "bash", ]
+
+#working_directory     = "None"
+#live_config_reload    = true
+#ipc_socket            = true
+
+[env]
+TERM                  = "xterm-256color"
+
+[window]
+#dimensions            = { columns = 0, lines = 0 }
+#position              = { x = 0, y = 0 }
+padding               = { x = 2, y = 2 }
+#dynamic_padding       = true
+decorations           = "None"
+opacity = 1.0
+blur                  = true
+#startup_mode          = "Windowed"
+#title                 = "Alacritty"
+#dynamic_title         = true
+#class                 = { instance = "Alacritty", general = "Alacritty" }
+#decorations_theme_variant = "None"
+#resize_increments     = false
+#option_as_alt         = "None"
+
+
+[scrolling]
+history               = 65535
+#multiplier            = 3
+
+[font]
+normal                = { family = "FiraCodeNerdFont", style = "Regular" }
+bold                  = { family = "FiraCodeNerdFont", style = "Bold" }
+italic                = { family = "FiraCodeNerdFont", style = "Italic" }
+bold_italic           = { family = "FiraCodeNerdFont", style = "Bold Italic" }
+size                  = 11
+offset                = { x = 0, y = 0 }
+glyph_offset          = { x = 0, y = 0 }
+#builtin_box_drawing   = true
+
+# Alacritty colors section — vibrant earthy palette with clear text contrast
+
+[colors.primary]
+background            = "#182425"
+foreground            = "#b7dda7"  # Warm Cream for clear text
+dim_foreground        = "#a0ac61"  # Muted Pale Green for less-important text
+bright_foreground     = "#ebcb85"  # Vibrant Coral Peach for bold text
+
+[colors.cursor]
+text                  = "#232525"  # Cursor text blends with background
+cursor                = "#DC143C"  # Vivid Cherry Red cursor
+
+[colors.vi_mode_cursor]
+text                  = "#232525"
+cursor                = "#DC143C"  # Lively Khaki Green in vi-mode
+
+[colors.search.matches]
+foreground            = "#232525"
+background            = "#FFD8A8"  # Warm Cream highlight
+
+[colors.search.focused_match]
+foreground            = "#232525"
+background            = "#F2885F"  # Coral Peach for focused match
+
+[colors.hints.start]
+foreground            = "#232525"
+background            = "#FFD8A8"
+
+[colors.hints.end]
+foreground            = "#232525"
+background            = "#B7BFB7"  # Pale Green for hint end
+
+[colors.footer_bar]
+foreground            = "#FFD8A8"
+background            = "#4E584E"  # Classic Ebony accent
+
+[colors.selection]
+text                  = "#232525"
+background            = "#FFD8A8"
+
+[colors.normal]
+black    = "#232525"
+red      = "#DC143C"
+green    = "#507a3a"
+yellow   = "#ddb689"
+blue     = "#2b745b"
+magenta  = "#ad5f56"
+cyan     = "#73CFCF"
+white    = "#cca677"
+
+[colors.bright]
+black    = "#505555"
+red      = "#EF5473"
+green    = "#CEE2C4"
+yellow   = "#F9F2EA"
+blue     = "#8FD5BD"
+magenta  = "#DBB9B5"
+cyan     = "#96DBDB"
+white    = "#F3EBE0"
+
+[colors.dim]
+black    = "#232424"
+red      = "#BB1032"
+green    = "#4F7A39"
+yellow   = "#DCB589"
+blue     = "#2B745B"
+magenta  = "#AD5E55"
+cyan     = "#3DB3B3"
+white    = "#CCA676"
+
+[colors]
+indexed_colors = [
+  { index = 16, color = "#DC143C" },   # Cherry Red accent
+  { index = 17, color = "#FFD8A8" }    # Warm Cream bright
+]
+draw_bold_text_with_bright_colors = true
+
+[selection]
+save_to_clipboard     = true
+
+[cursor.style]
+shape                 = "Block"
+blinking              = "Always"
+
+[cursor.vi_mode_style]
+shape                 = "Block"
+blinking              = "Off"
+
+[cursor]
+blink_interval        = 500
+blink_timeout         = 0
+
+[terminal]
+#osc52                 = "OnlyCopy"
+
+[mouse]
+hide_when_typing      = true
+bindings = [
+  { mouse = "Middle", action = "PasteSelection" },
+]
+
+[hints]
+#alphabet              = "jfkdls;ahgurieowpq"
+
+#[[hints.enabled]]
+#command               = "xdg-open"
+## command             = "open" # On macOS
+## command             = { program = "cmd", args = [ "/c", "start", "" ] } # On Windows
+#hyperlinks            = true
+#post_processing       = true
+#persist               = false
+#mouse.enabled         = true
+#binding               = { key = "U", mods = "Control|Shift" }
+#regex                 = "(ipfs:|ipns:|magnet:|mailto:|gemini://|gopher://|https://|http://|news:|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩‘]+"
+
+[keyboard]
+bindings = [
+  { key = "V",        mods = "Control|Shift", action = "Paste" },
+  { key = "C",        mods = "Control|Shift", action = "Copy" },
+  { key = "Paste",                            action = "Paste" },
+  { key = "Copy",                             action = "Copy" },
+  { key = "Insert",   mods = "Shift",         action = "PasteSelection" },
+  { key = "F",        mods = "Control|Shift", action = "SearchForward",     mode = "~Search" },
+  { key = "B",        mods = "Control|Shift", action = "SearchBackward",    mode = "~Search" },
+  { key = "Key0",     mods = "Control",       action = "ResetFontSize" },
+  { key = "Equals",   mods = "Control",       action = "IncreaseFontSize" },
+  { key = "Minus",    mods = "Control",       action = "DecreaseFontSize" },
+  { key = "L",        mods = "Control",       action = "ClearLogNotice" },
+  { key = "L",        mods = "Control",       chars  = "\f" },
+  { key = "PageUp",   mods = "Shift",         action = "ScrollPageUp",      mode = "~Alt" },
+  { key = "PageDown", mods = "Shift",         action = "ScrollPageDown",    mode = "~Alt" },
+  { key = "Up",       mods = "Shift",         action = "ScrollLineUp",      mode = "~Alt" },
+  { key = "Down",     mods = "Shift",         action = "ScrollLineDown",    mode = "~Alt" },
+  { key = "Home",     mods = "Shift",         action = "ScrollToTop",       mode = "~Alt" },
+  { key = "End",      mods = "Shift",         action = "ScrollToBottom",    mode = "~Alt" },
+]
+
+
+[debug]
+#render_timer          = false
+#persistent_logging    = false
+#log_level             = "Warn"
+#renderer              = "None"
+#print_events          = false
+#highlight_damage      = false
+#prefer_egl            = false

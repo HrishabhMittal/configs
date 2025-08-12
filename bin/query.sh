@@ -13,4 +13,4 @@ google_search_link() {
     echo "https://www.google.com/search?q=$encoded"
   fi
 }
-brave "$(google_search_link $(GTK_THEME=Rosepine-Dark yad --entry --width=500 --no-buttons))"
+zen-browser "$(google_search_link $(GTK_THEME=Rosepine-Dark yad --entry --width=500 --no-buttons))"

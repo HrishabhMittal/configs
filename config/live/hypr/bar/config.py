@@ -18,6 +18,7 @@ from fabric.utils import (
     bulk_replace,
     invoke_repeater,
     get_relative_path,
+    math,
 )
 
 AUDIO_WIDGET = True
@@ -29,7 +30,16 @@ volume_icons = {
     'medium':'󰖀',    # Medium
     'high':  '󰕾',    # High
 }
+brightness=""
 
+
+def get_brightness_icon(b):
+    b-=0.1
+    if b<0:
+        b=0
+    b/=100.0
+    b*=len(brightness)
+    return brightness[math.floor(b)] 
 def get_volume_icon(volume, muted):
     if muted or volume == 0:
         return volume_icons['muted']
@@ -39,6 +49,53 @@ def get_volume_icon(volume, muted):
         return volume_icons['medium']
     else:
         return volume_icons['high']
+
+class BrightnessWidget(Box):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.icon_label = Label(
+            label=volume_icons['medium'],
+            style="margin: 0px 6px 0px 0px; font-size: 16px",
+        )
+        self.event_box = EventBox(
+            events="scroll",
+            child=self.icon_label,
+        )
+        self.event_box.connect("scroll-event", self.on_scroll)
+        self.add(self.event_box)
+        self.update_brightness()
+        invoke_repeater(2000, self.update_brightness)  # Periodically update
+
+    def on_scroll(self, _, event):
+        step = 2
+        if event.direction == 0:
+            subprocess.run(["brightnessctl", "s", f"+{step}%"])
+        elif event.direction == 1:
+            subprocess.run(["brightnessctl", "s", f"{step}%-"])
+        self.update_brightness()
+
+    def get_brightness_status(self):
+        try:
+            output = subprocess.check_output(
+                ["brightnessctl","g"],
+                stderr=subprocess.STDOUT,
+                text=True
+            )
+            output2 = subprocess.check_output(
+                ["brightnessctl","m"],
+                stderr=subprocess.STDOUT,
+                text=True
+            )
+            output=int(output)*100//int(output2);
+            return output
+        except Exception:
+            return True, 0
+    def update_brightness(self):
+        volume = self.get_brightness_status()
+        icon = get_brightness_icon(volume)
+        self.icon_label.set_label(icon)
+
+
 
 class VolumeWidget(Box):
     def __init__(self, **kwargs):
@@ -249,6 +306,7 @@ class StatusBar(Window):
 
         self.bluetooth_widget = BluetoothWidget()
         self.wifi_widget = WifiWidget()
+        self.brightness_widget = BrightnessWidget()
         self.battery_widget = BatteryWidget()
         self.status_container = Box(
             name="widgets-container",
@@ -258,6 +316,7 @@ class StatusBar(Window):
                 self.bluetooth_widget,
                 self.wifi_widget,
                 self.battery_widget,
+                self.brightness_widget,
             ],
         )
         if AUDIO_WIDGET:

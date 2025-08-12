@@ -49,8 +49,8 @@ local function save_profiles(threshold)
 end
 
 time([[Luarocks path setup]], true)
-local package_path_str = "/home/hrishabhmittal/.cache/nvim/packer_hererocks/2.1.1736781742/share/lua/5.1/?.lua;/home/hrishabhmittal/.cache/nvim/packer_hererocks/2.1.1736781742/share/lua/5.1/?/init.lua;/home/hrishabhmittal/.cache/nvim/packer_hererocks/2.1.1736781742/lib/luarocks/rocks-5.1/?.lua;/home/hrishabhmittal/.cache/nvim/packer_hererocks/2.1.1736781742/lib/luarocks/rocks-5.1/?/init.lua"
-local install_cpath_pattern = "/home/hrishabhmittal/.cache/nvim/packer_hererocks/2.1.1736781742/lib/lua/5.1/?.so"
+local package_path_str = "/home/hrishabhmittal/.cache/nvim/packer_hererocks/2.1.1753364724/share/lua/5.1/?.lua;/home/hrishabhmittal/.cache/nvim/packer_hererocks/2.1.1753364724/share/lua/5.1/?/init.lua;/home/hrishabhmittal/.cache/nvim/packer_hererocks/2.1.1753364724/lib/luarocks/rocks-5.1/?.lua;/home/hrishabhmittal/.cache/nvim/packer_hererocks/2.1.1753364724/lib/luarocks/rocks-5.1/?/init.lua"
+local install_cpath_pattern = "/home/hrishabhmittal/.cache/nvim/packer_hererocks/2.1.1753364724/lib/lua/5.1/?.so"
 if not string.find(package.path, package_path_str, 1, true) then
   package.path = package.path .. ';' .. package_path_str
 end
@@ -99,6 +99,11 @@ _G.packer_plugins = {
     path = "/home/hrishabhmittal/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
+  ["everforest-nvim"] = {
+    loaded = true,
+    path = "/home/hrishabhmittal/.local/share/nvim/site/pack/packer/start/everforest-nvim",
+    url = "https://github.com/neanias/everforest-nvim"
+  },
   gruvbox = {
     loaded = true,
     path = "/home/hrishabhmittal/.local/share/nvim/site/pack/packer/start/gruvbox",
@@ -133,6 +138,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/hrishabhmittal/.local/share/nvim/site/pack/packer/start/themery.nvim",
     url = "https://github.com/zaldih/themery.nvim"
+  },
+  vhdl = {
+    loaded = true,
+    path = "/home/hrishabhmittal/.local/share/nvim/site/pack/packer/start/vhdl",
+    url = "https://github.com/vhda/vhdl"
   }
 }
 

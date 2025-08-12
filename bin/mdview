@@ -6,9 +6,13 @@ if [ "$#" -eq 0 ]; then
 fi
 
 INPUT_FILE="$1"
+INPUT_TMP_FILE=$(mktemp /tmp/input.XXXXXX.html)
 if [ ! -f "$INPUT_FILE" ]; then
-    echo "Error: File '$INPUT_FILE' not found!"
-    exit 1
+    echo "Error: File not found!"
+    echo using as text
+    echo "$@" >> "$INPUT_TMP_FILE"
+    INPUT_FILE="$INPUT_TMP_FILE"
+    trap "rm -f '$INPUT_TMP_FILE'" EXIT
 fi
 
 TMP_FILE=$(mktemp /tmp/markdown_viewer.XXXXXX.html)
@@ -89,8 +93,8 @@ echo "
             background: #3e4451;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css\">
+    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js\"></script>
     <script>hljs.highlightAll();</script>
 </head>
 <body>
@@ -103,6 +107,6 @@ echo "
 </html>
 " >> "$TMP_FILE"
 
-firefox --new-window "$TMP_FILE" --kiosk
+zen-browser "$TMP_FILE"
 
 sleep 1

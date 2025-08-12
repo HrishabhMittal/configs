@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# bruteforce bluetooth
+
+
 if [[ "$1" == "" ]]; then
     echo "Enter name of the device to connect to"
     exit 1

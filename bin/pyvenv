@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+PY_VERSION="$(python --version | awk '{print $2}')"
+if [[ "$1" == "make" ]]; then
+    echo enter new python venv name:
+    read -r dirname
+    dirname="$HOME/.pyvenv/$PY_VERSION/$dirname"
+    echo crating $dirname
+    mkdir -p "$dirname"
+    python -m venv "$dirname"
+else
+    arr=()
+    echo select an environment
+    num=1
+    for i in "$HOME/.pyvenv/$PY_VERSION/"*; do
+        echo "$num) $(basename $i)"
+        ((num++))
+        arr+=($(basename $i))
+    done
+    echo
+    read -r selected
+    
+    if [[ $selected -gt 0 && $selected -le ${#arr[@]} ]]; then
+        ((selected--))
+        echo "choosing $HOME/.pyvenv/$PY_VERSION/${arr[selected]}/bin/activate"
+        source "$HOME/.pyvenv/$PY_VERSION/${arr[selected]}/bin/activate"
+    fi
+fi

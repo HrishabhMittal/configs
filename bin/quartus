@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# export QT_QPA_PLATFORMTHEME=qt6ct
+# export QT_STYLE_OVERRIDE=kvantum
+# 
+# export LD_LIBRARY_PATH=/usr/lib:/usr/lib64:/usr/lib32:$HOME/apps/altera/13.1/quartus/linux64
+# 
+# if [ -f /usr/lib/qt6/plugins/styles/libkvantum.so ]; then
+#   export LD_PRELOAD=/usr/lib/qt6/plugins/styles/libkvantum.so
+# elif [ -f /usr/lib/qt/plugins/styles/libkvantum.so ]; then
+#   export LD_PRELOAD=/usr/lib/qt/plugins/styles/libkvantum.so
+# else
+#   unset LD_PRELOAD
+# fi
+
+exec $HOME/apps/altera/13.1/quartus/bin/quartus --64bit "$@"

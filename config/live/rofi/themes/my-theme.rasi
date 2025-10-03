@@ -1,0 +1,64 @@
+//@theme "/usr/share/rofi/themes/sidebar.rasi"
+* {
+    /* Theme settings */
+    highlight: bold italic;
+    scrollbar: true;
+
+    /* Solarized Dark palette */
+    base03:    #002b36;
+    base02:    #073642;
+    base01:    #586e75;
+    base00:    #657b83;
+    base0:     #839496;
+    base1:     #93a1a1;
+    base2:     #eee8d5;
+    base3:     #fdf6e3;
+    yellow:    #b58900;
+    orange:    #cb4b16;
+    red:       #dc322f;
+    magenta:   #d33682;
+    violet:    #6c71c4;
+    blue:      #268bd2;
+    cyan:      #2aa198;
+    green:     #859900;
+
+    /* Theme colors */
+    background:                  @base03;
+    background-color:            @background;
+    foreground:                  @base1;
+    border-color:                @base01;
+    separatorcolor:              @border-color;
+    scrollbar-handle:            @border-color;
+
+    normal-background:           @background;
+    normal-foreground:           @foreground;
+    alternate-normal-background: @base02;
+    alternate-normal-foreground: @foreground;
+    selected-normal-background:  @base01;
+    selected-normal-foreground:  @base2;
+
+    active-background:           @yellow;
+    active-foreground:           @base03;
+    alternate-active-background: @active-background;
+    alternate-active-foreground: @active-foreground;
+    selected-active-background:  @base2;
+    selected-active-foreground:  @active-background;
+
+    urgent-background:           @red;
+    urgent-foreground:           @base03;
+    alternate-urgent-background: @urgent-background;
+    alternate-urgent-foreground: @urgent-foreground;
+    selected-urgent-background:  #fb6a6a;
+    selected-urgent-foreground:  @urgent-foreground;
+}
+configuration {
+    font: "Fira Code 16";
+    show-icons: true;
+}
+window {
+    width:    30em;
+    height:   50%;
+    location: center;
+    anchor:   north;
+    border:   0px 2px 0px 0px;
+}

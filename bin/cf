@@ -1,0 +1,32 @@
+#!/bin/bash
+
+cd "$HOME/programs/cncpp/ongoing/cf/"
+if [[ "$1" == "" ]]; then
+    exit 1
+fi
+if [[ -f "$1" ]]; then
+    nvim "$1"
+else
+    echo "#include <iostream>
+using ll = long long;
+#define fastio std::ios_base::sync_with_stdio(false); std::cin.tie(nullptr)
+#define in(x) ll x; std::cin>>x;
+#define vin(v,n) std::vector<ll> v(n); for (ll i=0;i<n;i++) std::cin>>v[i];
+#define ain(v,n) ll v[n]; for (ll i=0;i<n;i++) std::cin>>v[i];
+int main() {
+    fastio;
+    in(t);
+    while (t--) {
+        
+    }
+}
+" > "$1"
+    nvim -c "normal! 10j8l" "$1"
+fi
+
+g++ "$1" -o main -g
+if [[ "$2" == "" ]]; then
+    cat input.txt | ./main
+else
+    ./main
+fi

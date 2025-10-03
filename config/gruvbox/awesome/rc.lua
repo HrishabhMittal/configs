@@ -10,7 +10,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 -- awful.spawn.with_shell("clipman &")
 awful.spawn.with_shell("picom &")
-awful.spawn.with_shell("$(killall lemonbar &) && /home/hrishabhmittal/.config/awesome/lemonbar.sh &")
+awful.spawn.with_shell("$(killall lemonbar &) && /home/hrishabhmittal/.config/awesome/bar.sh &")
 awful.spawn.with_shell("$(killall batteryd &) && /home/hrishabhmittal/.config/awesome/batteryd &")
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
@@ -406,3 +406,49 @@ gears.timer {
     autostart = true,
     callback = set_random_wallpaper
 }
+local bar_height = 36
+
+awful.screen.connect_for_each_screen(function(s)
+    -- … your existing tag, promptbox, layoutbox setup …
+
+    ----------------------------------------------------------------------------
+    -- 1) Create an invisible “spacer” wibar at the top to reserve space.  ----
+    ----------------------------------------------------------------------------
+    -- This wibar has zero‐opacity background and no widgets, but its height
+    -- (and type “dock”) forces Awesome to shrink the workarea by `bar_height`.
+    s.reserve_wibar = awful.wibar({
+        position        = "top",
+        screen          = s,
+        height          = bar_height,
+        stretch         = true,           -- fill full width
+        ontop           = true,
+        bg              = "#00000000",    -- transparent background
+        border_width    = 0,
+        input_passthrough = true,         -- allow clicks through (optional)
+    })
+
+    ----------------------------------------------------------------------------
+    -- 2) (Optional) If you need to embed other widgets into this wibar, set up
+    --    its layout—but you can leave it empty to fully pass through events.
+    ----------------------------------------------------------------------------
+    s.reserve_wibar:setup {
+        layout = wibox.layout.align.horizontal,
+        -- left widget (invisible spacer)
+        {
+            widget         = wibox.widget.separator,
+            forced_height  = bar_height,
+            opacity        = 0,
+        },
+        nil,  -- center
+        nil,  -- right
+    }
+
+    ----------------------------------------------------------------------------
+    -- 3) Now configure your usual Awesome widgets (panels, systray, clock, etc.)
+    --    below or above this spacer. They will live in their own wibar or popup.
+    ----------------------------------------------------------------------------
+
+    -- Example: your real top wibar with widgets might go here,
+    --     and will appear visually on top of this spacer.
+
+end)
